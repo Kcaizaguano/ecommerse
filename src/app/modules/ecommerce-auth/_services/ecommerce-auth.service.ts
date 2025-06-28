@@ -17,25 +17,25 @@ export class EcommerceAuthService {
 // DIRECCION DE CLIENTE
   listAddresClient(user_id: any) {
     let headers = new HttpHeaders({ 'token': this.authServices.token });
-    let URL = URL_SERVICIOS + "addres_client/list?user_id=" + user_id;
+    let URL = URL_SERVICIOS + "address_client/list?user_id=" + user_id;
     return this.http.get(URL, { headers: headers });
   }
 
   registerAddresClient(data: any) {
     let headers = new HttpHeaders({ 'token': this.authServices.token });
-    let URL = URL_SERVICIOS + 'addres_client/register';
+    let URL = URL_SERVICIOS + 'address_client/register';
     return this.http.post(URL, data, { headers: headers });
   }
 
   updateAddresClient(data: any) {
     let headers = new HttpHeaders({ 'token': this.authServices.token });
-    let URL = URL_SERVICIOS + 'addres_client/update';
+    let URL = URL_SERVICIOS + 'address_client/update';
     return this.http.put(URL, data, { headers: headers });
   }
 
   deleteAddresClient(address_client_id: any) {
     let headers = new HttpHeaders({ 'token': this.authServices.token });
-    let URL = URL_SERVICIOS + 'addres_client/delete/' + address_client_id;
+    let URL = URL_SERVICIOS + 'address_client/delete/' + address_client_id;
     return this.http.delete(URL, { headers: headers });
   }
 //
@@ -44,6 +44,13 @@ export class EcommerceAuthService {
 registerSale(data:any){
     let headers = new HttpHeaders({ 'token': this.authServices.token });
     let URL = URL_SERVICIOS + 'sale/register';
+    return this.http.post(URL, data, { headers: headers });
+}
+
+//
+showProfileClient(data:any){
+    let headers = new HttpHeaders({ 'token': this.authServices.token });
+    let URL = URL_SERVICIOS + 'home/profile_client';
     return this.http.post(URL, data, { headers: headers });
 }
 

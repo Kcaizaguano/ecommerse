@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { EcommerceAuthService } from '../_services/ecommerce-auth.service';
 import { CartService } from '../../ecommerce-guest/_services/cart.service';
+import { timeout } from 'rxjs';
 
 
 declare function alertDanger([]): any;
@@ -8,9 +9,8 @@ declare function alertSuccess([]): any;
 declare var paypal: any;
 @Component({
   selector: 'app-checkout',
-  imports: [],
   templateUrl: './checkout.component.html',
-  styleUrl: './checkout.component.css'
+  styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit {
 
@@ -36,18 +36,16 @@ export class CheckoutComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.authEcommerce.listAddresClient(this.authEcommerce.authServices.user._id).suscribe((resp: any) => {
+    this.authEcommerce.listAddresClient(this.authEcommerce.authServices.user._id).subscribe((resp: any) => {
       console.log(resp);
-      this.listAddresClient = resp.addres_client;
+      this.listAddresClient = resp.address_client;
     });
 
-    this.cartService.currentDataCart$.suscribe((resp: any) => {
+    this.cartService.currentDataCart$.subscribe((resp: any) => {
       console.log(resp);
       this.listCarts = resp;
       this.totalCarts = this.listCarts.reduce((sum: any, item: any) => sum + item.total, 0);
     });
-
-
     paypal.Buttons({
       // optional styling for buttons
       // https://developer.paypal.com/docs/checkout/standard/customize/buttons-style-guide/
@@ -112,10 +110,12 @@ export class CheckoutComponent implements OnInit {
             email:this.email,
             nota:this.nota,
         };
-      this.authEcommerce.registerSale({sale:sale ,sale_address:sale_address  }).suscribe((resp:any) =>{
+      this.authEcommerce.registerSale({sale:sale ,sale_address:sale_address  }).subscribe((resp:any) =>{
         console.log(resp);
         alertSuccess(resp.message);
-        location.reload();
+        setTimeout(() => {
+          location.reload();
+        }, 3000);
       })
 
         //return actions.order.capture().then(captureOrderHandler);
@@ -132,7 +132,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   store() {
-    if (!this.address_client_selected) {
+    if (this.address_client_selected) {
       this.updateAddress();
     } else {
       this.registerAddress();
@@ -140,7 +140,6 @@ export class CheckoutComponent implements OnInit {
   }
 
   registerAddress() {
-
     if (!this.name ||
       !this.surname ||
       !this.pais ||
@@ -152,6 +151,7 @@ export class CheckoutComponent implements OnInit {
       alertDanger("NECEITAS INGRESAR LOS CAMPOS OBLIGATORIOS DE LA DIRECCIÓN");
       return;
     }
+
     let data = {
       user: this.authEcommerce.authServices.user._id,
       name: this.name,
@@ -165,9 +165,9 @@ export class CheckoutComponent implements OnInit {
       nota: this.nota,
       referencia: this.referencia,
     };
-    this.authEcommerce.registerAddresClient(data).suscribe((resp: any) => {
+    this.authEcommerce.registerAddresClient(data).subscribe((resp: any) => {
       console.log(resp);
-      this.listAddresClient.push(resp.addres_client);
+      this.listAddresClient.push(resp.address_client);
       alertSuccess(resp.message);
       this.resetFormulario();
     });
@@ -175,7 +175,6 @@ export class CheckoutComponent implements OnInit {
 
 
   updateAddress() {
-
     if (!this.name ||
       !this.surname ||
       !this.pais ||
@@ -201,11 +200,9 @@ export class CheckoutComponent implements OnInit {
       nota: this.nota,
       referencia: this.referencia,
     };
-    this.authEcommerce.updateAddresClient(data).suscribe((resp: any) => {
-      console.log(resp);
+    this.authEcommerce.updateAddresClient(data).subscribe((resp: any) => {
       let INDEX = this.listAddresClient.findIndex((item: any) => item._id == this.address_client_selected._id);
-      this.listAddresClient[INDEX] = resp.addres_client;
-      this.listAddresClient.push(resp.addres_client);
+      this.listAddresClient[INDEX] = resp.address_client;
       alertSuccess(resp.message);
     });
 
