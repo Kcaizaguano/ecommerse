@@ -27,6 +27,7 @@ export class CheckoutComponent implements OnInit {
   email: any = null;
   nota: any = null;
   referencia: any = null;
+  
   address_client_selected: any = null;
   listCarts: any = [];
   totalCarts: any = [];
