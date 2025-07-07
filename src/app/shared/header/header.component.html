@@ -406,12 +406,12 @@
                                 <i class="flaticon-magnifying-glass"></i>
                             </a>
                         </li>
-                        <li class="wishlist">
+                        <li class="wishlist"  *ngIf="user" >
                             <a href="wishlist.html">
                                 <i class="flaticon-heart"></i>
                             </a>
                         </li>
-                        <li class="shopping-cart">
+                        <li class="shopping-cart" *ngIf="user" >
                             <a href="#" class="cart-dropdown-btn">
                                 <span class="cart-count"> {{ listCarts.length}} </span>
                                 <i class="flaticon-shopping-cart"></i>
@@ -421,6 +421,7 @@
                             <a href="javascript:void(0)">
                                 <i class="flaticon-person"></i>
                             </a>
+                            <small *ngIf="user" >  {{ user.name }} </small>
                             <div class="my-account-dropdown">
                                 <span class="title">QUICKLINKS</span>
                                 <ul>
@@ -437,7 +438,8 @@
                                         <a href="#">Language</a>
                                     </li>
                                 </ul>
-                                <a href="sign-in.html" class="axil-btn btn-bg-primary">Login</a>
+                                <a [routerLink]="['/auth/login']" class="axil-btn btn-bg-primary"  *ngIf="!user" >Iniciar Sesión</a>
+                                <a href="#"  onclick="return false;" (click)="logOut()" class="axil-btn btn-bg-primary"  *ngIf="user" >Salir</a>
                                 <div class="reg-footer text-center">No account yet? <a href="sign-up.html"
                                         class="btn-link">REGISTER HERE.</a></div>
                             </div>
@@ -463,7 +465,7 @@
         <div class="card-header">
             <form action="#">
                 <div class="input-group">
-                    <input type="search" class="form-control" name="prod-search" id="prod-search"
+                    <input type="search" class="form-control" name="prod-search" id="prod-search" [(ngModel)]="search_product" (keyup.enter)="searchProduct()" #filter
                         placeholder="Write Something....">
                     <button type="submit" class="axil-btn btn-bg-primary"><i class="far fa-search"></i></button>
                 </div>
@@ -471,31 +473,32 @@
         </div>
         <div class="card-body">
             <div class="search-result-header">
-                <h6 class="title">24 Result Found</h6>
+                <h6 class="title"> {{ products_search.length }} Result Found</h6>
                 <a href="shop.html" class="view-all">View All</a>
             </div>
             <div class="psearch-results">
+                <ng-container *ngFor="let product of products_search" >
                 <div class="axil-product-list">
                     <div class="thumbnail">
-                        <a href="single-product.html">
-                            <img src="./assets/images/product/electric/product-09.png" alt="Yantiti Leather Bags">
+                        <a [routerLink]="['/landing-producto/', product.slug]" [queryParams]="getRouterDiscount(product)"  >
+                            <img [src]="product.imagen" alt="Yantiti Leather Bags" width="120px" >
                         </a>
                     </div>
                     <div class="product-content">
                         <div class="product-rating">
                             <span class="rating-icon">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fal fa-star"></i>
+                                <i class="fas fa-star"  [ngClass]="{ 'start-del':product.avg_review < 1 }" ></i>
+                                <i class="fas fa-star"  [ngClass]="{ 'start-del':product.avg_review < 2 }" ></i>
+                                <i class="fas fa-star"  [ngClass]="{ 'start-del':product.avg_review < 3 }" ></i>
+                                <i class="fas fa-star"  [ngClass]="{ 'start-del':product.avg_review < 4 }" ></i>
+                                <i class="fas fa-star"  [ngClass]="{ 'start-del':product.avg_review < 5 }" ></i>
                             </span>
-                            <span class="rating-number"><span>100+</span> Reviews</span>
+                            <span class="rating-number"><span>{{ product.count_review}} +</span> Reviews</span>
                         </div>
-                        <h6 class="product-title"><a href="single-product.html">Media Remote</a></h6>
+                        <h6 class="product-title"><a [routerLink]="['/landing-producto/', product.slug]" [queryParams]="getRouterDiscount(product)"  >  {{ product.title  }} </a></h6>
                         <div class="product-price-variant">
-                            <span class="price current-price">$29.99</span>
-                            <span class="price old-price">$49.99</span>
+                            <span class="price current-price"> $ {{ product.price_usd - getDiscountProduct(product) }} USD</span>
+                            <span class="price old-price"  *ngIf="product.campaing_discount" >$ {{  product.price_usd }} </span>
                         </div>
                         <div class="product-cart">
                             <a href="cart.html" class="cart-btn"><i class="fal fa-shopping-cart"></i></a>
@@ -503,34 +506,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="axil-product-list">
-                    <div class="thumbnail">
-                        <a href="single-product.html">
-                            <img src="./assets/images/product/electric/product-09.png" alt="Yantiti Leather Bags">
-                        </a>
-                    </div>
-                    <div class="product-content">
-                        <div class="product-rating">
-                            <span class="rating-icon">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fal fa-star"></i>
-                            </span>
-                            <span class="rating-number"><span>100+</span> Reviews</span>
-                        </div>
-                        <h6 class="product-title"><a href="single-product.html">Media Remote</a></h6>
-                        <div class="product-price-variant">
-                            <span class="price current-price">$29.99</span>
-                            <span class="price old-price">$49.99</span>
-                        </div>
-                        <div class="product-cart">
-                            <a href="cart.html" class="cart-btn"><i class="fal fa-shopping-cart"></i></a>
-                            <a href="wishlist.html" class="cart-btn"><i class="fal fa-heart"></i></a>
-                        </div>
-                    </div>
-                </div>
+                </ng-container>
+
             </div>
         </div>
     </div>
@@ -552,7 +529,7 @@
                         <div class="item-img">
                             <a href="single-product.html"><img [src]="cart.product.imagen"
                                     alt="Commodo Blown Lamp"></a>
-                            <button class="close-btn"><i class="fas fa-times"></i></button>
+                            <button class="close-btn"  (click)="removeCart(cart)" ><i class="fas fa-times"></i></button>
                         </div>
                         <div class="item-content">
                             <div class="product-rating">
@@ -582,8 +559,8 @@
                 <span class="subtotal-amount"> $ {{ totalCarts }}  </span>
             </h3>
             <div class="group-btn">
-                <a href="cart.html" class="axil-btn btn-bg-primary viewcart-btn">View Cart</a>
-                <a href="checkout.html" class="axil-btn btn-bg-secondary checkout-btn">Checkout</a>
+                <a routerLink="/lista-de-carritos" class="axil-btn btn-bg-primary viewcart-btn">Ver Carrito</a>
+                <a routerLink="/proceso-de-pago" class="axil-btn btn-bg-secondary checkout-btn">Pagar</a>
             </div>
         </div>
     </div>

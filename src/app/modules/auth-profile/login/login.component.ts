@@ -35,11 +35,12 @@ export class LoginComponent implements OnInit {
     if (!this.password) { alertDanger('ES NECESARIO INGRESAR UNA CONTRASEÑA') }
 
 
-    this.authService.login(this.email, this.password).subscribe(resp => {
+    this.authService.login(this.email, this.password).subscribe((resp:any) => {
       console.log('respuesta', resp);
       if (!resp.error && resp) {
         // EL USUSARIO INGRESO CON EXITO
-        this.router.navigate(['/'])
+        //this.router.navigate(['/'])
+        location.reload();
       } else {
         alert(resp.error.message)
       }
