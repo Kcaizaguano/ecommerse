@@ -103,7 +103,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <ng-container *ngFor="let sale_detail of order_selected.sale_details" >
+                                                        <ng-container *ngFor="let sale_detail of order_selected.sale_detail" >
                                                             <tr>
                                                                 <th scope="row"># {{ sale_detail.product.title}} </th>
                                                                 <td> <img [src]="sale_detail.product.imagen"width="100" alt="Imagen del producto">  </td>
