@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { URL_SERVICIOS } from 'src/app/config/config';
+import { AuthService } from '../../auth-profile/_services/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +10,27 @@ export class EcommerceGuestService {
 
   constructor(
     public http: HttpClient,
+    public _authServices:AuthService,
   ) { }
 
-  showLandingProduct(slug: string){
-    let URL = URL_SERVICIOS+'home/landing-product/'+slug;
+  showLandingProduct(slug: string, discount_id: any = null) {
+    let LINK = "";
+    if (discount_id) {
+      LINK = "?_id=" + discount_id;
+    }
+    let URL = URL_SERVICIOS + 'home/landing-product/' + slug + LINK;
     return this.http.get(URL);
+  }
+
+
+  configInitial() {
+    let URL = URL_SERVICIOS + 'home/landing-product/config-initial';
+    return this.http.get(URL);
+  }
+
+  filterProduct(data:any) {
+    let TIME_NOW = new Date().getTime();
+    let URL = URL_SERVICIOS + 'home/filter_products?TIME_NOW=' + TIME_NOW;
+    return this.http.post(URL, data);
   }
 }

@@ -64,10 +64,10 @@ registro(data:any){
 }
 
 logout(){
-  localStorage.removeItem('token')
-  localStorage.removeItem('user')
-this.router.navigate(['auth/login'])
-
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  //this.router.navigate(['auth/login']);
+  location.reload();
 }
 
 }
