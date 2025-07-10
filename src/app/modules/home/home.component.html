@@ -162,28 +162,28 @@
                                             <li class="wishlist"><a href="wishlist.html"><i
                                                         class="far fa-heart"></i></a>
                                             </li>
-                                            <li class="select-option"><a href="#" onclick="return false;"  (click)="addCart(product)">Add to Cart</a></li>
+                                            <li class="select-option"><a href="#" onclick="return false;"  (click)="addCart(bestProd)">Add to Cart</a></li>
                                             <li class="quickview"><a href="#" data-bs-toggle="modal" (click)="openModal(bestProd)"
                                                     data-bs-target="#quick-view-modal" (click)="openModal(bestProd)"  ><i class="far fa-eye"></i></a>
                                             </li>
                                         </ul>
                                     </div>
-                                     <div class="label-block label-right"   *ngIf="best_product.campaing_discount"  >
-                                            <div class="product-badget" *ngIf="best_product.campaing_discount.discount.type_discount == 1" > {{  best_product.campaing_discount.discount }}% off  </div>
-                                            <div class="product-badget" *ngIf="best_product.campaing_discount.discount.type_discount == 2" > - {{  best_product.campaing_discount.discount }}USD  </div>
+                                     <div class="label-block label-right"   *ngIf="bestProd.campaing_discount"  >
+                                            <div class="product-badget" *ngIf="bestProd.campaing_discount.discount.type_discount == 1" > {{  bestProd.campaing_discount.discount }}% off  </div>
+                                            <div class="product-badget" *ngIf="bestProd.campaing_discount.discount.type_discount == 2" > - {{  bestProd.campaing_discount.discount }}USD  </div>
                                     </div>
                                 </div>
                                 <div class="product-content">
                                     <div class="inner">
                                         <div class="product-rating">
                                             <span class="icon">
-                                                <i class="fas fa-star"  [ngClass]="{ 'start-del':best_product.avg_review < 1 }" ></i>
-                                                <i class="fas fa-star"  [ngClass]="{ 'start-del':best_product.avg_review < 2 }" ></i>
-                                                <i class="fas fa-star"  [ngClass]="{ 'start-del':best_product.avg_review < 3 }" ></i>
-                                                <i class="fas fa-star"  [ngClass]="{ 'start-del':best_product.avg_review < 4 }" ></i>
-                                                <i class="fas fa-star"  [ngClass]="{ 'start-del':best_product.avg_review < 5 }" ></i>
+                                                <i class="fas fa-star"  [ngClass]="{ 'start-del':bestProd.avg_review < 1 }" ></i>
+                                                <i class="fas fa-star"  [ngClass]="{ 'start-del':bestProd.avg_review < 2 }" ></i>
+                                                <i class="fas fa-star"  [ngClass]="{ 'start-del':bestProd.avg_review < 3 }" ></i>
+                                                <i class="fas fa-star"  [ngClass]="{ 'start-del':bestProd.avg_review < 4 }" ></i>
+                                                <i class="fas fa-star"  [ngClass]="{ 'start-del':bestProd.avg_review < 5 }" ></i>
                                             </span>
-                                            <span class="rating-number">( {{  best_product.count_review}} )</span>
+                                            <span class="rating-number">( {{  bestProd.count_review}} )</span>
                                         </div>
                                         <h5 class="title"><a [routerLink]="['/landing-producto/', bestProd.slug]" [queryParams]="getRouterDiscount(bestProd)"  > {{ bestProd.title }} </a></h5>
                                         <div class="product-price-variant">

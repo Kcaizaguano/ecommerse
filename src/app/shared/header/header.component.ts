@@ -1,5 +1,6 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { debounceTime, fromEvent } from 'rxjs';
 import { CartService } from 'src/app/modules/ecommerce-guest/_services/cart.service';
 
 @Component({

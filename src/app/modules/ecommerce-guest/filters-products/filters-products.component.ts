@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EcommerceGuestService } from '../_services/ecommerce-guest.service';
 import { CartService } from '../_services/cart.service';
+import { Router } from '@angular/router';
 
 
 declare function priceRangeSlider(): any;
@@ -11,9 +12,8 @@ declare function ModalProductDetail(): any;
 
 @Component({
   selector: 'app-filters-products',
-  imports: [],
   templateUrl: './filters-products.component.html',
-  styleUrl: './filters-products.component.css'
+  styleUrls: ['./filters-products.component.css']
 })
 export class FiltersProductsComponent implements OnInit {
 
@@ -28,7 +28,6 @@ export class FiltersProductsComponent implements OnInit {
     public ecommerceGuest: EcommerceGuestService,
     public cartService: CartService,
     public router: Router,
-
   ) { }
 
 

@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -13,16 +15,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FooterComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule,
+    FormsModule,
   ],
 
   exports:[
     HeaderComponent,
     FooterComponent,
-    FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule,
   ]
 })
 export class SharedModule { }
